@@ -46,10 +46,7 @@ public class TimezoneValidateFilter extends HttpFilter {
 
         String timezone = req.getParameter("timezone");
 
-        if (timezone == null) {
-            timezone = getTimezoneFromCookies(req).orElse(null);
-            chain.doFilter(req, res);
-        } else if (isValidTimezone(normalizeTimezone(timezone))) {
+        if (timezone == null || timezone.isEmpty() || isValidTimezone(normalizeTimezone(timezone))) {
             chain.doFilter(req, res);
         } else {
             sendErrorResponse(res, "Invalid timezone");
@@ -64,16 +61,6 @@ public class TimezoneValidateFilter extends HttpFilter {
         context.setVariable("message", message);
 
         templateEngine.process("error", context, res.getWriter());
-    }
-
-    private Optional<String> getTimezoneFromCookies(HttpServletRequest req) {
-        if (req.getCookies() != null) {
-            return Arrays.stream(req.getCookies())
-                    .filter(cookie -> "lastTimezone".equals(cookie.getName()))
-                    .map(Cookie::getValue)
-                    .findFirst();
-        }
-        return Optional.empty();
     }
 
     private boolean isValidTimezone(String timezone) {
