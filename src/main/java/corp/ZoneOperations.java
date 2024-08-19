@@ -3,7 +3,9 @@ package corp;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.util.Objects;
 import java.util.Set;
+import java.util.TimeZone;
 
 public class ZoneOperations {
     public static void main(String[] args) {
@@ -33,5 +35,12 @@ public class ZoneOperations {
         for (String s: ZoneId.getAvailableZoneIds()) {
             System.out.println(s);
         }
+        System.out.println("Valid TimeZone");
+        System.out.println(isValidTimezone("UTS-4"));
+        System.out.println(isValidTimezone("GMT+4"));
+        System.out.println(TimeZone.getTimeZone(""));
+    }
+    private static boolean isValidTimezone(String timezone) {
+        return !Objects.equals(TimeZone.getTimeZone(timezone).getID(), "GMT");
     }
 }
