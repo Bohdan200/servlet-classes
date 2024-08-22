@@ -6,17 +6,14 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpFilter;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import java.io.IOException;
-import java.time.ZoneId;
 
+import java.time.ZoneId;
 import java.util.Map;
-import java.util.Arrays;
-import java.util.Optional;
 
 @WebFilter(value = "/time/*")
 public class TimezoneValidateFilter extends HttpFilter {
